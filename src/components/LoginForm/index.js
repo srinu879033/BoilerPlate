@@ -39,11 +39,13 @@ const LoginForm = () => {
               className="input-field"
               placeholder="Enter UserName"
               required
+              id="username"
             />
             <input
               type="password"
               className="input-field"
               placeholder="Enter Password"
+              id="password"
               required
             />
             <input type="checkbox" className="check-box" />
