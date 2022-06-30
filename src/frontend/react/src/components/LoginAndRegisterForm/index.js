@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.css";
-
+console.log("fuck");
 const LoginAndRegisterForm = () => {
   const initialState = {
     login: true,
