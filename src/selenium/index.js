@@ -1,6 +1,7 @@
 const { Builder, By, Key } = require("selenium-webdriver");
 const port = process.env.PORT || 3000;
 const assert = require("assert");
+
 const checkLogin = async () => {
   let driver = await new Builder().forBrowser("chrome").build();
   await driver.get(`http://localhost:${port}/`);
@@ -12,7 +13,7 @@ const checkLogin = async () => {
   try {
     await driver.findElement(By.id("password")).sendKeys("Selenium");
   } catch (err) {
-    console.log(err.message, Key.RETURN);
+    console.log(err.message);
   }
 };
 

@@ -1,5 +1,6 @@
 // to override the configuration provided by create-react-app
 const webpackConfig = require("./webpack.config.js");
+
 module.exports = {
   reactScriptsVersion: "react-scripts",
   style: {
@@ -38,7 +39,9 @@ module.exports = {
       add: [],
       remove: [],
     },
-    configure: {},
+    configure: (webpackConfig, { env, paths }) => {
+      return webpackConfig;
+    },
   },
   devServer: {},
 };
