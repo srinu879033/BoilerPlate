@@ -20,10 +20,10 @@
     "selenium-webdriver": "^4.3.0"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco  build",
-    "test": "craco test",
-    "eject": "craco eject"
+    "start": "react-scripts start",
+    "build": "react-scripts  build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +43,7 @@
       "last 1 safari version"
     ]
   },
-  "cracoConfig": "craco.config.js",
+  "cracoConfig": "configs/craco.config.js",
   "devDependencies": {
     "webpack-cli": "^4.10.0"
   }
