@@ -3,9 +3,9 @@ const assert = require("assert");
 const mocha = require("mocha");
 const describe = mocha.describe;
 const LoginPage = require("./pages/loginPage");
-//describe block
 
 const navigatingUrl = `http://localhost:${port}`; //url of the application that  we want to test
+
 describe("adding tests for login", async () => {
   //beforeEach method will be executed before executing each it block
   beforeEach(async () => {
@@ -15,15 +15,46 @@ describe("adding tests for login", async () => {
   afterEach(async () => {
     await LoginPage.closeBrowser(); //closing the browser instance
   });
-  //it block
-  it("validation of username", async () => {
-    await LoginPage.login("", "My Password"); //logging in
-    const obtainedOutput = await LoginPage.getText("usernameErrorMsg");
-    await assert.strictEqual(obtainedOutput, "Username is Required");
-  });
-  it("validation of password", async () => {
-    await LoginPage.login("My Username", "");
-    const obtainedOutput = await LoginPage.getText("passwordErrorMsg");
-    await assert.strictEqual(obtainedOutput, "Password is Required");
-  });
+  //array of input testCases
+  const testsForValidationOfUsername = [
+    {
+      username: "",
+      password: "My Password",
+      expectedOutput: "Username is Required",
+    },
+    { username: "My Username", password: "My Password", expectedOutput: "" },
+  ];
+
+  testsForValidationOfUsername.forEach(
+    ({ username, password, expectedOutput }) => {
+      it("validation of username", async () => {
+        await LoginPage.login(username, password); //logging in
+        const obtainedOutput = await LoginPage.getText("usernameErrorMsg"); //accessing value of the element with id  usernameErrorMsg
+        await assert.strictEqual(obtainedOutput, expectedOutput);
+      });
+    }
+  );
+
+  const testsForValidationOfPassword = [
+    {
+      username: "My Username",
+      password: "",
+      expectedOutput: "Password is Required",
+    },
+    {
+      username: "My Username",
+      password: "My Password",
+      expectedOutput: "",
+    },
+  ];
+
+  testsForValidationOfPassword.forEach(
+    ({ username, password, expectedOutput }) => {
+      it("validation of password", async () => {
+        await LoginPage.login(username, password);
+        const obtainedOutput = await LoginPage.getText("passwordErrorMsg"); //accessing value of the element with id  passwordErrorMsg
+        await assert.strictEqual(obtainedOutput, expectedOutput);
+      });
+    }
+  );
 });
