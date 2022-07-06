@@ -1,33 +1,28 @@
-const { Builder, By, Key } = require("selenium-webdriver");
-
 const port = process.env.PORT || 3000;
 const assert = require("assert");
-let driver = null;
 const mocha = require("mocha");
 const describe = mocha.describe;
+const LoginPage = require("./pages/loginPage");
 //describe block
 
-describe("adding tests for login", () => {
+const navigatingUrl = `http://localhost:${port}`;
+describe("adding tests for login", async () => {
+  beforeEach(async () => {
+    await LoginPage.launchBrowser(navigatingUrl);
+  });
+  afterEach(async () => {
+    await LoginPage.closeBrowser();
+  });
   //it block
-  it("checking validation", async () => {
-    try {
-      driver = await new Builder().forBrowser("chrome").build();
-      await driver.get(`http://localhost:${port}/`);
-      const username = await driver.findElement(By.id("username"));
-      const password = await driver.findElement(By.id("password"));
-      username.sendKeys("My Username");
-      password.sendKeys("My Password", Key.RETURN);
-      const obtainedOutput = await driver
-        .findElement(By.id("usernameErrorMsg"))
-        .getText()
-        .then((value) => {
-          return value;
-        });
-      assert.strictEqual(obtainedOutput, "");
-      await driver.quit();
-    } catch (error) {
-      console.log(error.message);
-    }
+  it("checking validation of username", async () => {
+    await LoginPage.login("", "My Password");
+    const obtainedOutput = await LoginPage.getText("usernameErrorMsg");
+    await assert.strictEqual(obtainedOutput, "Username is Required");
+  });
+  it("checking validation of password", async () => {
+    await LoginPage.login("My Username", "");
+    const obtainedOutput = await LoginPage.getText("passwordErrorMsg");
+    await assert.strictEqual(obtainedOutput, "Password is Required");
   });
 });
 
