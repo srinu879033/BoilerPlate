@@ -5,11 +5,11 @@ class Page {
     this.driver = null;
   }
   async launchBrowser(navigatingUrl) {
-    this.driver = await new Builder().forBrowser("chrome").build();
-    await this.driver.get(navigatingUrl);
+    this.driver = await new Builder().forBrowser("chrome").build(); //building a driver
+    await this.driver.get(navigatingUrl); // navigating to our application
   }
   async closeBrowser() {
-    await this.driver.quit();
+    await this.driver.quit(); //closing the browser instance
   }
 }
 
