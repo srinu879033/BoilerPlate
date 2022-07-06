@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./index.css";
-console.log("fuck");
+
 const LoginAndRegisterForm = () => {
   const initialState = {
     login: true,
     username: "",
     password: "",
-    userErrorMsg: "",
+    usernameErrorMsg: "",
     passwordErrorMsg: "",
     mail: "",
     mailErrorMsg: "",
@@ -32,10 +32,10 @@ const LoginAndRegisterForm = () => {
       setFormState({
         ...formState,
         username,
-        userErrorMsg: "*Username is required",
+        usernameErrorMsg: "*Username is required",
       });
     } else {
-      setFormState({ ...formState, username: username, userErrorMsg: "" });
+      setFormState({ ...formState, username: username, usernameErrorMsg: "" });
     }
   };
 
@@ -82,26 +82,64 @@ const LoginAndRegisterForm = () => {
     event.preventDefault();
     console.log(event.target.id);
     if (event.target.id === "login") {
-      const { userErrorMsg, passwordErrorMsg } = formState;
-      if (userErrorMsg === "" && passwordErrorMsg === "") {
-        alert("Logged In");
+      const { usernameErrorMsg, passwordErrorMsg, username, password } =
+        formState;
+      if (username === "") {
+        setFormState({
+          ...formState,
+          usernameErrorMsg: "Username is Required",
+        });
+      }
+      if (password === "") {
+        setFormState({
+          ...formState,
+          passwordErrorMsg: "Password is Required",
+        });
+      }
+      if (usernameErrorMsg === "" && passwordErrorMsg === "") {
+        //alert("Logged In");
       }
     } else {
       const conditionsCheck = document.getElementById("checkbox").checked;
       const {
-        userErrorMsg,
+        usernameErrorMsg,
         passwordErrorMsg,
         mailErrorMsg,
         confirmPasswordErrorMsg,
+        username,
+        mail,
+        password,
+        confirmPassword,
       } = formState;
+      if (username === "") {
+        setFormState({
+          ...formState,
+          usernameErrorMsg: "Username is Required",
+        });
+      }
+      if (mail === "") {
+        setFormState({ ...formState, mailErrorMsg: "Email is Invalid" });
+      }
+      if (password === "") {
+        setFormState({
+          ...formState,
+          passwordErrorMsg: "Password is Required",
+        });
+      }
+      if (confirmPassword === "") {
+        setFormState({
+          ...formState,
+          confirmPasswordErrorMsg: "Passwords do not match",
+        });
+      }
       if (
-        userErrorMsg === "" &&
+        usernameErrorMsg === "" &&
         passwordErrorMsg === "" &&
         mailErrorMsg === "" &&
         confirmPasswordErrorMsg === "" &&
         conditionsCheck
       ) {
-        alert("Successfully Registered");
+        //alert("Successfully Registered");
       } else {
         if (!conditionsCheck) {
           setFormState({ ...formState, checkboxErrorMsg: "*Required" });
@@ -151,7 +189,9 @@ const LoginAndRegisterForm = () => {
               id="username"
               onChange={onChangeUsername}
             />
-            <p className="error-msg">{formState.userErrorMsg}</p>
+            <p className="error-msg" id="usernameErrorMsg">
+              {formState.usernameErrorMsg}
+            </p>
             <input
               type="password"
               className="input-field"
@@ -159,7 +199,9 @@ const LoginAndRegisterForm = () => {
               id="password"
               onChange={onChangePassword}
             />
-            <p className="error-msg">{formState.passwordErrorMsg}</p>
+            <p className="error-msg" id="passwordErrorMsg">
+              {formState.passwordErrorMsg}
+            </p>
             <div
               style={{
                 display: "flex",
@@ -188,29 +230,41 @@ const LoginAndRegisterForm = () => {
               className="input-field"
               placeholder="Enter Username"
               onChange={onChangeUsername}
+              id="usernameRegister"
             />
-            <p className="error-msg">{formState.userErrorMsg}</p>
+            <p className="error-msg" id="usernameErrorMsg">
+              {formState.usernameErrorMsg}
+            </p>
             <input
               type="email"
               className="input-field"
               placeholder="Enter email"
               onChange={onChangeMail}
+              id="mailId"
             />
-            <p className="error-msg">{formState.mailErrorMsg}</p>
+            <p className="error-msg" id="mailErrorMsg">
+              {formState.mailErrorMsg}
+            </p>
             <input
               type="password"
               className="input-field"
               placeholder="Enter Password"
               onChange={onChangePassword}
+              id="passwordRegister"
             />
-            <p className="error-msg">{formState.passwordErrorMsg}</p>
+            <p className="error-msg" id="passwordErrorMsg">
+              {formState.passwordErrorMsg}
+            </p>
             <input
               type="text"
               className="input-field"
               placeholder="Confirm Password"
               onChange={onChangeConfirmPassword}
+              id="confirmPassword"
             />
-            <p className="error-msg">{formState.confirmPasswordErrorMsg}</p>
+            <p className="error-msg" id="confirmPasswordErrorMsg">
+              {formState.confirmPasswordErrorMsg}
+            </p>
             <div
               style={{
                 display: "flex",
