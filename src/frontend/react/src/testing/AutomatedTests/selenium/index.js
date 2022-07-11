@@ -1,10 +1,17 @@
 const port = process.env.PORT || 3000;
 const assert = require("assert");
 const mocha = require("mocha");
+const {
+  usernameValidationMsg,
+  passwordValidationMsg,
+} = require("../../../constants/validationMsgs");
 const describe = mocha.describe;
 const LoginPage = require("./pages/loginPage");
 
 const navigatingUrl = `http://localhost:${port}`; //url of the application that  we want to test
+
+const validUsername = "My Username";
+const validPassword = "My Password";
 
 describe("adding tests for login", async () => {
   //beforeEach method will be executed before executing each it block
@@ -19,10 +26,10 @@ describe("adding tests for login", async () => {
   const testsForValidationOfUsername = [
     {
       username: "",
-      password: "My Password",
-      expectedOutput: "Username is Required",
+      password: validPassword,
+      expectedOutput: usernameValidationMsg,
     },
-    { username: "My Username", password: "My Password", expectedOutput: "" },
+    { username: validUsername, password: validPassword, expectedOutput: "" },
   ];
 
   testsForValidationOfUsername.forEach(
@@ -37,13 +44,13 @@ describe("adding tests for login", async () => {
 
   const testsForValidationOfPassword = [
     {
-      username: "My Username",
+      username: validUsername,
       password: "",
-      expectedOutput: "Password is Required",
+      expectedOutput: passwordValidationMsg,
     },
     {
-      username: "My Username",
-      password: "My Password",
+      username: validUsername,
+      password: validPassword,
       expectedOutput: "",
     },
   ];

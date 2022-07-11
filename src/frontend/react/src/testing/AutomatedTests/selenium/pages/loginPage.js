@@ -12,7 +12,7 @@ class LoginPage extends Page {
 
   //function for getting the value of our required element
   async getText(id) {
-    return await this.driver
+    return this.driver
       .findElement(By.id(id))
       .getText()
       .then((value) => {

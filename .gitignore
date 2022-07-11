@@ -1,11 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
+#ignoring node_modules folder
 /node_modules
 /.pnp
 .pnp.js
-/mochawesome-report
 
+#ignore the sonarqube files
+/.scannerwork
+
+#ignore the test reports
+/mochawesome-report
 # testing
 /coverage
 

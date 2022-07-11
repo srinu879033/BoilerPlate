@@ -9,6 +9,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.8.6",
+    "@mui/styles": "^5.8.7",
     "@testing-library/react": "^13.3.0",
     "antd": "^4.21.3",
     "mocha": "^10.0.0",

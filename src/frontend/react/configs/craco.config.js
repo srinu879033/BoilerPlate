@@ -39,7 +39,7 @@ module.exports = {
       add: [],
       remove: [],
     },
-    configure: (webpackConfig, { env, paths }) => {
+    configure: () => {
       return webpackConfig;
     },
   },
