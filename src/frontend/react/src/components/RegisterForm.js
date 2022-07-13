@@ -5,6 +5,7 @@ const RegisterForm = ({
   onChangePassword,
   onChangeUsername,
   handleSubmit,
+  onClickCheckbox,
 }) => {
   return (
     <form
@@ -18,13 +19,13 @@ const RegisterForm = ({
         className="input-field"
         placeholder="Enter Username"
         onChange={onChangeUsername}
-        id="usernameRegister"
+        id="username"
       />
       <p className="error-msg" id="usernameErrorMsg">
         {formState.usernameErrorMsg}
       </p>
       <input
-        type="email"
+        type="text"
         className="input-field"
         placeholder="Enter email"
         onChange={onChangeMail}
@@ -38,7 +39,7 @@ const RegisterForm = ({
         className="input-field"
         placeholder="Enter Password"
         onChange={onChangePassword}
-        id="passwordRegister"
+        id="password"
       />
       <p className="error-msg" id="passwordErrorMsg">
         {formState.passwordErrorMsg}
@@ -60,7 +61,15 @@ const RegisterForm = ({
           alignItems: "center",
         }}
       >
-        <input type="checkbox" className="check-box" id="checkbox" required />
+        <p className="error-msg" id="confirmPasswordErrorMsg">
+          {formState.checkboxErrorMsg}
+        </p>
+        <input
+          type="checkbox"
+          className="check-box"
+          id="checkbox"
+          onClick={onClickCheckbox}
+        />
         <p style={{ fontSize: "13px" }}>I agree to the terms & Conditions</p>
       </div>
 

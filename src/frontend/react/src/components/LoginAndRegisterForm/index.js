@@ -18,102 +18,102 @@ const LoginAndRegisterForm = () => {
     password: "",
     usernameErrorMsg: "",
     passwordErrorMsg: "",
-    mail: "",
+    mailId: "",
     mailErrorMsg: "",
     confirmPassword: "",
     confirmPasswordErrorMsg: "",
+    checkboxErrorMsg: "",
   };
 
   const [formState, setFormState] = useState(initialState);
 
   const currForm = formState.login ? "Login Form" : "Register Form";
 
-  const updateUsername = (username, usernameErrorMsg) => {
-    setFormState({ ...formState, username, usernameErrorMsg });
-  };
-  const updatePassword = (password, passwordErrorMsg) => {
-    setFormState({ ...formState, password, passwordErrorMsg });
-  };
   const onChangeUsername = (event) => {
     const username = event.target.value;
-    if (username === "") {
-      updateUsername(username, usernameValidationMsg);
-    } else {
-      updateUsername(username, "");
-    }
+    const usernameErrorMsg = username === "" ? usernameValidationMsg : "";
+    setFormState({
+      ...formState,
+      username,
+      usernameErrorMsg: usernameErrorMsg,
+    });
   };
 
   const onChangePassword = (event) => {
     const password = event.target.value;
-    if (password === "") {
-      updatePassword(password, passwordValidationMsg);
-    } else {
-      updatePassword(password, "");
-    }
+    const passwordErrorMsg = password === "" ? passwordValidationMsg : "";
+    setFormState({
+      ...formState,
+      password,
+      passwordErrorMsg: passwordErrorMsg,
+    });
   };
 
   const onChangeMail = (event) => {
-    const mail = event.target.value;
-    if (!validateEmail(mail)) {
-      setFormState({ ...formState, mail, mailErrorMsg: mailValidationMsg });
-    } else {
-      setFormState({ ...formState, mail, mailErrorMsg: "" });
-    }
+    const mailId = event.target.value;
+    const mailErrorMsg = !validateEmail(mailId) ? mailValidationMsg : "";
+    setFormState({ ...formState, mailId, mailErrorMsg });
   };
 
   const onChangeConfirmPassword = (event) => {
     const confirmPassword = event.target.value;
-    if (confirmPassword !== formState.password) {
-      setFormState({
-        ...formState,
-        confirmPassword,
-        confirmPasswordErrorMsg: confirmPasswordValidationMsg,
-      });
-    } else {
-      setFormState({
-        ...formState,
-        confirmPassword,
-        confirmPasswordErrorMsg: "",
-      });
-    }
+    const confirmPasswordErrorMsg =
+      confirmPassword !== formState.password
+        ? confirmPasswordValidationMsg
+        : "";
+    setFormState({
+      ...formState,
+      confirmPassword,
+      confirmPasswordErrorMsg,
+    });
   };
 
+  const onClickCheckbox = (event) => {
+    console.log("fuck");
+    const checkboxErrorMsg = event.target.checked ? "" : checkboxValidationMsg;
+    setFormState({ ...formState, checkboxErrorMsg });
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, mail, password, confirmPassword } = formState;
+    const { username, password, confirmPassword, mailId } = formState;
     if (event.target.id === "login") {
-      if (username === "") {
-        updateUsername(username, usernameValidationMsg);
-      }
-      if (password === "") {
-        updatePassword(password, passwordValidationMsg);
+      const usernameErrorMsg = username === "" ? usernameValidationMsg : "";
+      const passwordErrorMsg = password === "" ? passwordValidationMsg : "";
+      if (username === "" || password === "") {
+        setFormState({
+          ...formState,
+          username,
+          password,
+          usernameErrorMsg,
+          passwordErrorMsg,
+        });
       }
     } else {
-      const conditionsCheck = document.getElementById("checkbox").checked;
-
-      if (username === "") {
-        updateUsername(username, usernameValidationMsg);
-      }
-      if (!validateEmail(mail)) {
-        setFormState({ ...formState, mailErrorMsg: mailValidationMsg });
-      }
-      if (password === "") {
-        updatePassword(password, passwordValidationMsg);
-      }
-      if (confirmPassword === "") {
+      const usernameErrorMsg = username === "" ? usernameValidationMsg : "";
+      const passwordErrorMsg = password === "" ? passwordValidationMsg : "";
+      const mailErrorMsg = !validateEmail(mailId) ? mailValidationMsg : "";
+      const confirmPasswordErrorMsg =
+        confirmPassword !== formState.password
+          ? confirmPasswordValidationMsg
+          : "";
+      const checkboxErrorMsg = document.getElementById("checkbox").checked
+        ? ""
+        : checkboxValidationMsg;
+      if (
+        usernameErrorMsg === "" ||
+        passwordErrorMsg === "" ||
+        mailErrorMsg === "" ||
+        confirmPasswordErrorMsg === "" ||
+        checkboxErrorMsg === ""
+      ) {
         setFormState({
           ...formState,
-          confirmPasswordErrorMsg: confirmPasswordValidationMsg,
+          usernameErrorMsg,
+          passwordErrorMsg,
+          confirmPasswordErrorMsg,
+          mailErrorMsg,
+          checkboxErrorMsg,
         });
-      }
-
-      if (!conditionsCheck) {
-        setFormState({
-          ...formState,
-          checkboxErrorMsg: checkboxValidationMsg,
-        });
-      } else {
-        setFormState({ ...formState, checkboxErrorMsg: "" });
       }
     }
   };
@@ -124,6 +124,7 @@ const LoginAndRegisterForm = () => {
         <div className="button-box">
           <div id="btn"></div>
           <button
+            id="toggleLogin"
             className="toggle-btn"
             onClick={() => {
               const btn = document.getElementById("btn");
@@ -134,11 +135,11 @@ const LoginAndRegisterForm = () => {
             Login
           </button>
           <button
+            id="toggleRegister"
             className="toggle-btn"
             onClick={() => {
               const btn = document.getElementById("btn");
               btn.style.left = "110px";
-              formState.login = false;
               setFormState({ ...initialState, login: false });
             }}
           >
@@ -158,6 +159,7 @@ const LoginAndRegisterForm = () => {
         )}
         {!formState.login && (
           <RegisterForm
+            onClickCheckbox={onClickCheckbox}
             handleSubmit={handleSubmit}
             formState={formState}
             onChangeConfirmPassword={onChangeConfirmPassword}

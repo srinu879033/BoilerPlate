@@ -3,6 +3,8 @@ const LoginForm = ({
   handleSubmit,
   onChangeUsername,
   onChangePassword,
+  onBlurUsername,
+  onBlurPassword,
 }) => {
   return (
     <form id="login" class="input-group" onSubmit={handleSubmit}>
@@ -11,7 +13,9 @@ const LoginForm = ({
         className="input-field"
         placeholder="Enter Username"
         id="username"
+        value={formState.username}
         onChange={onChangeUsername}
+        onBlur={onBlurUsername}
       />
       <p className="error-msg" id="usernameErrorMsg">
         {formState.usernameErrorMsg}
@@ -21,7 +25,9 @@ const LoginForm = ({
         className="input-field"
         placeholder="Enter Password"
         id="password"
+        value={formState.password}
         onChange={onChangePassword}
+        onBlur={onBlurPassword}
       />
       <p className="error-msg" id="passwordErrorMsg">
         {formState.passwordErrorMsg}
@@ -33,7 +39,7 @@ const LoginForm = ({
           alignItems: "center",
         }}
       >
-        <input type="checkbox" className="check-box" />
+        <input type="checkbox" className="check-box" id="checkbox" />
 
         <p>Remember Password</p>
       </div>
