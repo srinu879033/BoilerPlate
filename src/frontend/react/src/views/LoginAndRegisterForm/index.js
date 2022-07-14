@@ -8,8 +8,8 @@ import {
   confirmPasswordValidationMsg,
 } from "../../constants/validationMsgs";
 import { validateEmail } from "../../utilities/helpers";
-import LoginForm from "../LoginForm";
-import RegisterForm from "../RegisterForm";
+import LoginForm from "../../components/LoginForm";
+import RegisterForm from "../../components/RegisterForm";
 
 const LoginAndRegisterForm = () => {
   const initialState = {
