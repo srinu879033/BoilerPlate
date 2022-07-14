@@ -1,6 +1,7 @@
 import Feed from "./Feed";
 import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import Navbar from "./Navbar";
+import "../index.css";
 import { useState } from "react";
 
 function HomePage() {

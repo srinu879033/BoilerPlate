@@ -10,8 +10,10 @@ import {
 import { validateEmail } from "../../utilities/helpers";
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
+import { useNavigate } from "react-router-dom";
 
 const LoginAndRegisterForm = () => {
+  const history = useNavigate();
   const initialState = {
     login: true,
     username: "",
@@ -87,6 +89,8 @@ const LoginAndRegisterForm = () => {
           usernameErrorMsg,
           passwordErrorMsg,
         });
+      } else {
+        history("/", { replace: false });
       }
     } else {
       const usernameErrorMsg = username === "" ? usernameValidationMsg : "";
