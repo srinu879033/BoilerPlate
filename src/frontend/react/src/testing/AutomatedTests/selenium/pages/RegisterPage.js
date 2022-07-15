@@ -14,9 +14,12 @@ class RegisterPage extends Page {
     );
 
     await this.usernameInputElement.sendKeys(username); //sending input
-    await this.passwordInputElement.sendKeys(password, Key.RETURN); //sending input
+    await this.passwordInputElement.sendKeys(password); //sending input
     await this.mailInputElement.sendKeys(mailId);
-    await this.confirmPasswordInputElement.sendKeys(confirmPassword);
+    await this.confirmPasswordInputElement.sendKeys(
+      confirmPassword,
+      Key.RETURN
+    );
     await this.driver.findElement(By.id("register")).click();
   }
 

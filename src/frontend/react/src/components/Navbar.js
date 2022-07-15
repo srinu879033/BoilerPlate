@@ -99,7 +99,12 @@ const Navbar = () => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <Link to="/login">
+        <Link
+          to="/login"
+          onClick={(e) => {
+            localStorage.removeItem("jwt_token");
+          }}
+        >
           <MenuItem>Logout</MenuItem>
         </Link>
       </Menu>

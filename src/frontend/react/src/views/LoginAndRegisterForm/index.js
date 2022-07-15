@@ -11,6 +11,7 @@ import { validateEmail } from "../../utilities/helpers";
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
 import { useNavigate } from "react-router-dom";
+import { createUser, loginUser } from "../../services/apiCalls";
 
 const LoginAndRegisterForm = () => {
   const history = useNavigate();
@@ -71,11 +72,10 @@ const LoginAndRegisterForm = () => {
   };
 
   const onClickCheckbox = (event) => {
-    console.log("fuck");
     const checkboxErrorMsg = event.target.checked ? "" : checkboxValidationMsg;
     setFormState({ ...formState, checkboxErrorMsg });
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { username, password, confirmPassword, mailId } = formState;
     if (event.target.id === "login") {
@@ -90,7 +90,14 @@ const LoginAndRegisterForm = () => {
           passwordErrorMsg,
         });
       } else {
-        history("/", { replace: false });
+        try {
+          const serverResponse = await loginUser({ username, password });
+          localStorage.setItem("jwt_token", serverResponse.access_token);
+          history("/", { replace: false });
+          alert("Login Success");
+        } catch (error) {
+          console.log(error.message);
+        }
       }
     } else {
       const usernameErrorMsg = username === "" ? usernameValidationMsg : "";
@@ -104,11 +111,11 @@ const LoginAndRegisterForm = () => {
         ? ""
         : checkboxValidationMsg;
       if (
-        usernameErrorMsg === "" ||
-        passwordErrorMsg === "" ||
-        mailErrorMsg === "" ||
-        confirmPasswordErrorMsg === "" ||
-        checkboxErrorMsg === ""
+        usernameErrorMsg !== "" ||
+        passwordErrorMsg !== "" ||
+        mailErrorMsg !== "" ||
+        confirmPasswordErrorMsg !== "" ||
+        checkboxErrorMsg !== ""
       ) {
         setFormState({
           ...formState,
@@ -118,6 +125,20 @@ const LoginAndRegisterForm = () => {
           mailErrorMsg,
           checkboxErrorMsg,
         });
+      } else {
+        const userData = {
+          email: mailId,
+          username: username,
+          password: password,
+          first_name: username,
+        };
+        try {
+          await createUser(userData);
+          alert("Register Success");
+        } catch (error) {
+          console.log(error.message);
+          alert("Register Failed");
+        }
       }
     }
   };

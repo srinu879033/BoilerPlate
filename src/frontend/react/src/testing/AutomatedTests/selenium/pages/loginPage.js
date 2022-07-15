@@ -8,7 +8,7 @@ class LoginPage extends Page {
     this.passwordInputElement = this.driver.findElement(By.id("password")); //accessing password input element in the login page
 
     await this.usernameInputElement.sendKeys(username); //sending input
-    await this.passwordInputElement.sendKeys(password); //sending input
+    await this.passwordInputElement.sendKeys(password, Key.RETURN); //sending input
     await this.driver.findElement(By.id("login")).click();
   }
 
